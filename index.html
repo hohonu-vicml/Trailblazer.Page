@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+
+
+
+  <head>
+
+ <style>
+hr {
+        border: 0;
+    height: 1px;
+background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+.bottom-three {
+     margin-bottom: 3cm;
+  }
+</style>
+
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TrailBlazer: Trajectory Control for Diffusion-Based Video Generation</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript"
+  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hohonu-vicml.github.io/DirectedDiffusion.Page">
+            Directed Diffusion
+          </a>
+          <!-- <a class="navbar-item" href="https://nerfies.github.io"> -->
+          <!--   Nerfies -->
+          <!-- </a> -->
+          <!-- <a class="navbar-item" href="https://latentfusion.github.io"> -->
+          <!--   LatentFusion -->
+          <!-- </a> -->
+          <!-- <a class="navbar-item" href="https://photoshape.github.io"> -->
+          <!--   PhotoShape -->
+          <!-- </a> -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">TrailBlazer: Trajectory Control for Diffusion-Based Video Generation</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/kurt-ma/">Wan-Duo Kurt Ma</a><sup>1</sup>,&nbsp&nbsp</span>
+            <span class="author-block">
+              <a href="http://www.scribblethink.org/">J. P. Lewis</a><sup>2</sup>,&nbsp&nbsp</span>
+            <span class="author-block">
+              <a href="https://people.wgtn.ac.nz/bastiaan.kleijn">W. Bastiaan Kleijn</a><sup>1</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Victoria University of Wellington,&nbsp&nbsp</span>
+            <span class="author-block"><sup>2</sup>NVIDIA Research</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="http://TODO"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="http://TODO"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=NIkyoynDtvU"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Project</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=AbVz0CA6_Ro"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Result</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/hohonu-vicml/Trailblazer"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+             <!-- <\!-- dataset Link. -\-> -->
+            <!--   <span class="link-block"> -->
+            <!--     <a href="https://github.com/google/nerfies/releases/tag/0.1" -->
+            <!--        class="external-link button is-normal is-rounded is-dark"> -->
+            <!--       <span class="icon"> -->
+            <!--           <i class="far fa-images"></i> -->
+            <!--       </span> -->
+            <!--       <span>Data</span> -->
+            <!--       </a> -->
+            <!-- </div> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/dd/TDD.0002.mov"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">TrailBlazer</span>  features the stable diffusion based video editing with pre-trained model without further model training, finetuning, and online optimization, supporting various user experiences as depicted.
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<!-- <section class="hero is-light is-small"> -->
+<!--   <div class="hero-body"> -->
+<!--     <div class="container"> -->
+<!--       <div id="results-carousel" class="carousel results-carousel"> -->
+<!--         <div class="item item-steve"> -->
+<!--           <video poster="" id="steve" autoplay controls muted loop playsinline height="100%"> -->
+<!--             <source src="./static/videos/steve.mp4" -->
+<!--                     type="video/mp4"> -->
+<!--           </video> -->
+<!--         </div> -->
+<!--         <div class="item item-chair-tp"> -->
+<!--           <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%"> -->
+<!--             <source src="./static/videos/chair-tp.mp4" -->
+<!--                     type="video/mp4"> -->
+<!--           </video> -->
+<!--         </div> -->
+<!--         <div class="item item-shiba"> -->
+<!--           <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%"> -->
+<!--             <source src="./static/videos/shiba.mp4" -->
+<!--                     type="video/mp4"> -->
+<!--           </video> -->
+<!--         </div> -->
+<!--         <div class="item item-fullbody"> -->
+<!--           <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%"> -->
+<!--             <source src="./static/videos/fullbody.mp4" -->
+<!--                     type="video/mp4"> -->
+<!--           </video> -->
+<!--         </div> -->
+<!--         <div class="item item-blueshirt"> -->
+<!--           <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%"> -->
+<!--             <source src="./static/videos/blueshirt.mp4" -->
+<!--                     type="video/mp4"> -->
+<!--           </video> -->
+<!--         </div> -->
+<!--         <div class="item item-mask"> -->
+<!--           <video poster="" id="mask" autoplay controls muted loop playsinline height="100%"> -->
+<!--             <source src="./static/videos/mask.mp4" -->
+<!--                     type="video/mp4"> -->
+<!--           </video> -->
+<!--         </div> -->
+<!--         <div class="item item-coffee"> -->
+<!--           <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%"> -->
+<!--             <source src="./static/videos/coffee.mp4" -->
+<!--                     type="video/mp4"> -->
+<!--           </video> -->
+<!--         </div> -->
+<!--         <div class="item item-toby"> -->
+<!--           <video poster="" id="toby" autoplay controls muted loop playsinline height="100%"> -->
+<!--             <source src="./static/videos/toby2.mp4" -->
+<!--                     type="video/mp4"> -->
+<!--           </video> -->
+<!--         </div> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </section> -->
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Within recent approaches to text-to-video (T2V) generation,
+achieving controllability in the synthesized video is often a challenge.
+Typically, this issue is addressed by providing low-level per-frame guidance in
+the form of edge maps, depth maps, or an existing video to be altered. However,
+the process of obtaining such guidance can be labor-intensive.
+            </p>
+          <p>
+            This paper focuses on enhancing controllability in video synthesis
+by employing straightforward bounding boxes to guide the subject in diverse
+ways, all without the need for neural network training, finetuning, optimization
+at inference time, or the use of pre-existing videos. Our algorithm,
+<span class="dnerf">TrailBlazer</span>, is constructed upon a pre-trained (T2V)
+model, and easy to implement. The subject is directed by a bounding box through
+the proposed spatial and temporal attention map editing. Moreover, we introduce
+the concept of keyframing, allowing the subject trajectory and overall
+appearance to guided by both a moving bounding box and corresponding prompts,
+without the need to provide a detailed mask. The method is efficient, with
+negligible additional computation relative to the underlying pre-trained model.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+  <!--   <div class="columns is-centered has-text-centered"> -->
+  <!--     <div class="column is-four-fifths"> -->
+  <!--       <h2 class="title is-3">Project Video</h2> -->
+  <!--       <div class="publication-video"> -->
+  <!--         <iframe src="https://www.youtube.com/embed/VAl7q9dHGwY" -->
+  <!--                 frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
+  <!--       </div> -->
+  <!--     </div> -->
+  <!--   </div> -->
+  <!--   <\!-- Paper video. -\-> -->
+  <!--   <div class="columns is-centered has-text-centered"> -->
+  <!--     <div class="column is-four-fifths"> -->
+  <!--       <h2 class="title is-3">Result Video</h2> -->
+  <!--       <div class="publication-video"> -->
+  <!--         <iframe src="https://www.youtube.com/embed/VAl7q9dHGwY" -->
+  <!--                 frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
+  <!--       </div> -->
+  <!--     </div> -->
+  <!--   </div> -->
+  <!-- </div> -->
+
+
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+
+      <!-- <\!-- Visual Effects. -\-> -->
+      <!-- <div class="column"> -->
+      <!--   <div class="content"> -->
+      <!--     <h2 class="title is-3">Visual Effects</h2> -->
+      <!--     <p> -->
+      <!--       Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect -->
+      <!--       would be impossible without nerfies since it would require going through a wall. -->
+      <!--     </p> -->
+      <!--     <video id="dollyzoom" autoplay controls muted loop playsinline height="100%"> -->
+      <!--       <source src="./static/videos/dollyzoom-stacked.mp4" -->
+      <!--               type="video/mp4"> -->
+      <!--     </video> -->
+      <!--   </div> -->
+      <!-- </div> -->
+      <!-- <\!--/ Visual Effects. -\-> -->
+
+      <!-- <\!-- Matting. -\-> -->
+      <!-- <div class="column"> -->
+      <!--   <h2 class="title is-3">Matting</h2> -->
+      <!--   <div class="columns is-centered"> -->
+      <!--     <div class="column content"> -->
+      <!--       <p> -->
+      <!--         As a byproduct of our method, we can also solve the matting problem by ignoring -->
+      <!--         samples that fall outside of a bounding box during rendering. -->
+      <!--       </p> -->
+      <!--       <video id="matting-video" controls playsinline height="100%"> -->
+      <!--         <source src="./static/videos/matting.mp4" -->
+      <!--                 type="video/mp4"> -->
+      <!--       </video> -->
+      <!--     </div> -->
+      <!--   </div> -->
+      <!-- </div> -->
+
+
+    </div>
+    <!--/ Matting. -->
+
+    <!-- Animation. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+
+
+
+        <!-- Core method -->
+        <h2 class="title is-3">Core Method</h2>
+        <div class="content has-text-justified">
+          <p>
+            <span class="dnerf">TrailBlazer</span> highlights the central
+            components of spatial cross-attention editing (left, in the golden
+            section) and temporal cross-frame attention editing (right, in the
+            blue section). This operation is exclusively applied during the
+            denoising process in the early stage. The objective is to alter the
+            attention map ($\mathbf{A}$) using a Gaussian weighting within a user-specified
+            bbox. For more in-depth information, please consult our main text.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/dd/TDD.0003.mov"
+                type="video/mp4">
+      </video>
+        </div>
+
+        <hr class="bottom-three">
+        <!-- Compositing -->
+        <h2 class="title is-3">Scene compositing</h2>
+        <!-- <h2 class="title is-4">Method</h2> -->
+        <div class="content has-text-justified">
+          <p>
+            Given the set of latents generated from our system using a single bbox denoted as $(\mathbf{Z}_{cat})_{T:T −N}$ and $(\mathbf{Z}_{dog})_{T:T −N}$ for the case of prompts related to ball and dog. Then, the scene compositor produces a synthesis of multiple subjects with the complete prompt and the single subject latents. Note the following synthesis of  ``a white cat'' and ``a yellow dog'' serves as a sanity check for the quliaty of subjects.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/dd/TDD.0004.mov"
+                type="video/mp4">
+      </video>
+        </div>
+
+        <!-- <h2 class="title is-4">Result</h2> -->
+        <div class="content has-text-justified">
+          <p>
+            The composed prompt is then jointly combine the subject prompt as a
+            whole (e.g., ``a white cat and a yellow dog..'') suffixed by the
+            prompt such as the environment description below (e.g., ``.... on
+            the moon''). Notably, the interactions between the background and
+            subjects appear plausible, as seen in the consistent shadows across all samples.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/dd/TDD.0005.mov"
+                type="video/mp4">
+      </video>
+        </div>
+
+
+        <hr class="bottom-three">
+        <!-- Pipelin -->
+        <h2 class="title is-3">Keyframing</h2>
+        <div class="content has-text-justified">
+          <p>
+            The bounding boxes and prompts can be animated via keyframes,
+            enabling users to alter the trajectory and coarse behavior of the
+            subject along the timeline. The resulting subject(s) fit seamlessly
+            in the specified environment, providing a viable pipeline for video
+            storytelling by casual users.
+          </p>
+        </div>
+
+        <div class="content has-text-centered">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/dd/TDD.0007.mov"
+                type="video/mp4">
+      </video>
+        </div>
+        <!-- Keyframe result -->
+        <div class="content has-text-justified">
+          <p>
+            <span class="dnerf">TrailBlazer</span> features a novel way to guide
+            the synthesized subject through bbox keyframing. For instacne, the user can
+            aniamte the fish swimming towards the camera and then goes away. Or,
+            the user can control the cat running speed through keyframing.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/dd/TDD.0006.mov"
+                type="video/mp4">
+      </video>
+        </div>
+        <!-- Keyframe result -->
+
+
+
+
+        <hr class="bottom-three">
+        <!-- Pipelin -->
+        <h2 class="title is-3">Conclusion</h2>
+        <div class="content has-text-justified">
+          <p>
+            Our ccontributions are serveral listed below:
+          </p>
+          <ol>
+            <li>
+              <strong>Novelty</strong>: We introduce a novel
+              approach, <span class="dnerf">TrailBlazer</span>, employing
+              high-level bounding boxes to guide the subject in diffusionbased
+              video synthesis. This approach is suitable for casual users, as it
+              avoids the need to record or draw a frame-by-frame positioning
+              control signal.
+            </li>
+            <li>
+              <strong>Trajectory
+              control</strong>: <span class="dnerf">TrailBlazer</span> enables
+              users to position the subject by keyframing its bounding box. The
+              size of the bbox can be similarly controlled, thereby producing
+              perspective effects. Finally, users can also keyframe the text
+              prompt to influence the behavior of the subject in the synthesized
+              video.
+            </li>
+            <li>
+              <strong>Simplicity</strong>: <span class="dnerf">TrailBlazer</span>
+              operates by directly editing the spatial and temporal attention in
+              the pre-trained denoising UNet. It requiring no training or
+              optimization, and the core algorithm can be implemented in less
+              than 200 lines of code.
+            </li>
+          </ol>
+        </div>
+        <!-- Keyframe result -->
+
+
+        <hr class="bottom-three">
+        <!-- Pipelin -->
+        <h2 class="title is-3">Citation</h2>
+        <div class="content has-text-justified">
+          <p>
+            <span class="dnerf">TrailBlazer</span> will be further enhanced to
+            improve the quality and usability. If you find our work interesting,
+            please cite our article.
+          </p>
+        </div>
+        <!-- Keyframe result -->
+
+
+
+
+
+
+
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{ma2024flowforge,
+        author    = {Wan-Duo Kurt Ma, J. P. Lewis, and W. Bastiaan Kleijn},
+        title     = {TrailBlazer: Trajectory Control for Diffusion-Based Video Generation},
+        year      = {2023},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/hohonu-vicml" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website utilizes the page template developed by
+            the <a href="https://nerfies.github.io">Nerfies</a> team. The
+            authors extend their appreciation for their diligent efforts in
+            creating this highly flexible and high-quality work.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
