@@ -203,9 +203,7 @@ background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75
                 type="video/mp4">
       </video>
       <h2 class="subtitle has-text-centered">
-        <span class="dnerf">TrailBlazer</span>  features the text-to-video diffusion based video editing with 
-        pre-trained model without further model training, finetuning, and online optimization, supporting 
-        various user experiences as depicted.
+        <span class="dnerf">TrailBlazer</span> features text-to-video diffusion based video editing using a pre-trained model without further model training, finetuning, or online optimization. It supports various user experiences as depicted.
       </h2>
     </div>
   </div>
@@ -277,27 +275,8 @@ background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
-          <p> Within recent approaches to text-to-video (T2V) generation, achieving
-controllability in the synthesized video is often a challenge. Typically, this
-issue is addressed by providing low-level per-frame guidance in the form of
-edge maps, depth maps, or an existing video to be altered. However, the process
-of obtaining such guidance can be labor-intensive. This paper focuses on
-enhancing controllability in video synthesis by employing straightforward
-bounding boxes to guide the subject in various ways, all without the need for
-neural network training, finetuning, optimization at inference time, or the use
-of pre-existing videos. </p>
-          <p> Our algorithm, TrailBlazer, is constructed upon a
-pre-trained (T2V) model, and easy to implement. The subject is directed by a
-bounding box through the proposed spatial and temporal attention map editing.
-Moreover, we introduce the concept of keyframing, allowing the subject
-trajectory and overall appearance to be guided by both a moving bounding box
-and corresponding prompts, without the need to provide a detailed mask. The
-method is efficient, with negligible additional computation relative to the
-underlying pre-trained model. Despite the simplicity of the bounding box
-guidance, the resulting motion is surprisingly natural, with emergent effects
-including perspective and movement toward the virtual camera as the box size
-increases.
-          </p>
+          <p> WIth recent approaches to text-to-video (T2V) generation, achieving controllability in the synthesized video is often a challenge. Typically, this issue is addressed by providing low-level per-frame guidance in the form of edge maps, depth maps, or an existing video to be altered. However, the process of obtaining such guidance can be labor-intensive and the restriction to existing videos limits creativity. This paper focuses on providing controllability in video synthesis by employing straightforward bounding boxes to guide the subject in various ways, all without the use of pre-existing videos or the need for neural network training, finetuning, optimization at inference time. </p>
+          <p> Our algorithm, TrailBlazer, is constructed upon a pre-trained (T2V) model, and easy to implement. The subject is directed by a bounding box through the proposed spatial and temporal attention map editing. Moreover, we support guiding the object trajectory and its appearance by keyframing a moving bounding box and corresponding prompts, without the need to provide a detailed mask. The method is efficient, with negligible additional computation relative to the underlying pre-trained model. Despite the simplicity of the bounding box guidance, the resulting motion is surprisingly natural, with emergent effects including perspective and movement toward the virtual camera as the box size increases. </p>
         </div>
       </div>
     </div>
@@ -382,13 +361,7 @@ increases.
         <h2 class="title is-3">Core Method</h2>
         <div class="content has-text-justified">
           <p>
-            <span class="dnerf">TrailBlazer</span> highlights the central
-            components of spatial cross-attention editing (left, in the golden
-            section) and temporal cross-frame attention editing (right, in the
-            blue section). This operation is exclusively applied during the
-            denoising process in the early stage. The objective is to alter the
-            attention map ($\mathbf{A}$) using a Gaussian weighting within a user-specified
-            bbox. For more in-depth information, please consult our main text.
+            <span class="dnerf">TrailBlazer</span> highlights the central components of spatial cross-attention editing (left, in the golden section) and temporal cross-frame attention editing (right, in the blue section). This operation is exclusively applied during the denoising process in the early stage. The objective is to alter the attention map within a user-specified bounding box (bbox). For more in-depth information, please consult our main text.
           </p>
         </div>
         <div class="content has-text-centered">
@@ -404,10 +377,7 @@ increases.
         <!-- <h2 class="title is-4">Method</h2> -->
         <div class="content has-text-justified">
           <p>
-            Given the set of latents generated from our system using a single bbox (e.g., dog, cat) for 
-            the case of prompts related to ball and dog. Then, the scene compositor produces a synthesis 
-            of multiple subjects with the complete prompt and the single subject latents. Note the following 
-            synthesis of ``a white cat'' and ``a yellow dog'' serves as a sanity check for the quliaty of subjects.
+            Scene compositing allows the motion of several subjects to be simultaneously controlled.This algorithm first computes the initial denoising steps of each subject individually. The first figure below shows the synthesis of “a white cat” and “a yellow dog” individually, serving as a sanity check for the quality of the subjects. 
           </p>
         </div>
         <div class="content has-text-centered">
@@ -420,11 +390,7 @@ increases.
         <!-- <h2 class="title is-4">Result</h2> -->
         <div class="content has-text-justified">
           <p>
-            The composed prompt is then jointly combine the subject prompt as a
-            whole (e.g., ``a white cat and a yellow dog..'') suffixed by the
-            prompt such as the environment description below (e.g., ``.... on
-            the moon''). Notably, the interactions between the background and
-            subjects appear plausible, as seen in the consistent shadows across all samples.
+            Then, these per-subject intermediate results are composited and processed by a global denoising under the control of a complete prompt (“a white cat and a yellow dog…”) that includes a description of the environment (e.g., “...on the moon”). Note that interactions between the background and subjects appear plausible, as seen in the consistent shadows across all samples.
           </p>
         </div>
         <div class="content has-text-centered">
@@ -457,10 +423,8 @@ increases.
         <!-- Keyframe result -->
         <div class="content has-text-justified">
           <p>
-            <span class="dnerf">TrailBlazer</span> features a novel way to guide
-            the synthesized subject through bbox keyframing. For instacne, the user can
-            aniamte the fish swimming towards the camera and then goes away. Or,
-            the user can control the cat running speed through keyframing.
+            <span class="dnerf">TrailBlazer</span> features a novel way to guide the synthesized subject through bbox keyframing. For instance, the user can animate the fish swimming towards the camera and then goes away. Or, the user can control the cat running speed through keyframing. <span class="dnerf">TrailBlazer</span>’s keyframing is surprisingly powerful. For example, a fish swimming toward the camera and then away can be animated simply by increasing and then reducing the bbox size.
+
           </p>
         </div>
         <div class="content has-text-centered">
@@ -475,11 +439,20 @@ increases.
 
 
         <hr class="bottom-three">
+
+        <h2 class="title is-3">Limitations</h2>
+        <div class="content has-text-justified">
+          <p>
+           <span class="dnerf">TrailBlazer</span> inherits the limitations of the underlying pre-trained model (ZeroScope). These include animals with an incorrect number of limbs and other issues common to a number of diffusion-based T2I and T2V methods.
+          </p>
+        </div>
+
+        
         <!-- Pipelin -->
         <h2 class="title is-3">Conclusion</h2>
         <div class="content has-text-justified">
           <p>
-            Our ccontributions are serveral listed below:
+            Our contributions are listed below:
           </p>
           <ol>
             <li>
@@ -496,7 +469,7 @@ increases.
             <li>
               <strong>Trajectory control</strong>: 
               <span class="dnerf">TrailBlazer</span> enables users to position the subject by keyframing its bounding box. 
-              The size of the bbox can be similarly controlled, thereby producing perspective effects.
+              The size of the bbox can be similarly controlled, thereby producing directional motion and perspective effects.
               Finally, users can also keyframe the text prompt to influence the behavior of the subject in the synthesized video.
             </li>
             <li>
