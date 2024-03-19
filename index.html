@@ -6,6 +6,7 @@
   <head>
 
  <style>
+
 hr {
         border: 0;
     height: 1px;
@@ -13,7 +14,7 @@ background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75
 }
 .bottom-three {
      margin-bottom: 3cm;
-  }
+}
 </style>
 
   <meta charset="utf-8">
@@ -213,7 +214,7 @@ background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75
                 type="video/mp4">
       </video>
       <h2 class="subtitle has-text-centered">
-        <span class="dnerf">TrailBlazer</span> features text-to-video diffusion based video editing using a pre-trained model without further model training, finetuning, or online optimization. It supports various user experiences as depicted.
+        <span class="dnerf">TrailBlazer</span> features text-to-video diffusion video editing using a pre-trained model without further model training, finetuning, or online optimization. It supports various user experiences as depicted.
       </h2>
     </div>
   </div>
@@ -285,8 +286,28 @@ background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
-          <p> WIth recent approaches to text-to-video (T2V) generation, achieving controllability in the synthesized video is often a challenge. Typically, this issue is addressed by providing low-level per-frame guidance in the form of edge maps, depth maps, or an existing video to be altered. However, the process of obtaining such guidance can be labor-intensive and the restriction to existing videos limits creativity. This paper focuses on providing controllability in video synthesis by employing straightforward bounding boxes to guide the subject in various ways, all without the use of pre-existing videos or the need for neural network training, finetuning, optimization at inference time. </p>
-          <p> Our algorithm, TrailBlazer, is constructed upon a pre-trained (T2V) model, and easy to implement. The subject is directed by a bounding box through the proposed spatial and temporal attention map editing. Moreover, we support guiding the object trajectory and its appearance by keyframing a moving bounding box and corresponding prompts, without the need to provide a detailed mask. The method is efficient, with negligible additional computation relative to the underlying pre-trained model. Despite the simplicity of the bounding box guidance, the resulting motion is surprisingly natural, with emergent effects including perspective and movement toward the virtual camera as the box size increases. </p>
+          <p>Within recent approaches to text-to-video (T2V) generation,
+          achieving controllability in the synthesized video is often a
+          challenge. Typically, this issue is addressed by providing low-level
+          per-frame guidance in the form of edge maps, depth maps, or an
+          existing video to be altered. However, the process of obtaining such
+          guidance can be labor-intensive. This paper focuses on enhancing
+          controllability in video synthesis by employing straightforward
+          bounding boxes to guide the subject in various ways, all without the
+          need for neural network training, finetuning, optimization at
+          inference time, or the use of pre-existing videos.</p>
+          <p>Our algorithm, <span class="dnerf">TrailBlazer</span>, is
+          constructed upon a pre-trained (T2V) model, and easy to implement. The
+          subject is directed by a bounding box through the proposed spatial and
+          temporal attention map editing. Moreover, we introduce the concept of
+          keyframing, allowing the subject trajectory, morphing, and overall
+          appearance to be guided by both a moving bounding box and
+          corresponding prompts, without the need to provide a detailed mask.
+          The method is efficient, with negligible additional computation
+          relative to the underlying pre-trained model. Despite the simplicity
+          of the bounding box guidance, the resulting motion is surprisingly
+          natural, with emergent effects including perspective and movement
+          toward the virtual camera as the box size increases.</p>
         </div>
       </div>
     </div>
@@ -365,13 +386,28 @@ background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75
     <div class="columns is-centered">
       <div class="column is-full-width">
 
-
+        <!-- Core method -->
+        <h2 class="title is-3">Update</h2>
+        <div class="content has-text-justified">
+          <ul><li><b>[2024/Mar/22]</b> <span class="dnerf">TrailBlazer</span> is about to update both the ArXiv paper and its codebase in the upcoming week. </li>
+            <li><b>[2024/Feb/07]</b> The Gradio app is updated with better keyframe interface. </li>
+            <li><b>[2024/Feb/06]</b> We now have Gradio web app at Huggingface Space!. </li>
+            <li><b>[2024/Jan/03]</b> Paper v1 released on ArXiv. </li>
+            <li><b>[2023/Dec/31]</b> Paper submitted on ArXiv.. </li>
+          </ul>
+        </div>
 
         <!-- Core method -->
         <h2 class="title is-3">Core Method</h2>
         <div class="content has-text-justified">
           <p>
-            <span class="dnerf">TrailBlazer</span> highlights the central components of spatial cross-attention editing (left, in the golden section) and temporal cross-frame attention editing (right, in the blue section). This operation is exclusively applied during the denoising process in the early stage. The objective is to alter the attention map within a user-specified bounding box (bbox). For more in-depth information, please consult our main text.
+            <span class="dnerf">TrailBlazer</span> highlights the central
+            components of spatial cross-attention editing (left, in the
+            almond-colored section) and temporal cross-frame attention editing
+            (right, in the blue section). This operation is exclusively applied
+            during the denoising process in the early stage. The objective is to
+            alter the attention map within a user-specified bounding box (bbox).
+            For more in-depth information, please consult our main text.
           </p>
         </div>
         <div class="content has-text-centered">
@@ -387,7 +423,7 @@ background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75
         <!-- <h2 class="title is-4">Method</h2> -->
         <div class="content has-text-justified">
           <p>
-            Scene compositing allows the motion of several subjects to be simultaneously controlled.This algorithm first computes the initial denoising steps of each subject individually. The first figure below shows the synthesis of “a white cat” and “a yellow dog” individually, serving as a sanity check for the quality of the subjects. 
+            Scene compositing allows the motion of several subjects to be simultaneously controlled.This algorithm first computes the initial denoising steps of each subject individually. The first figure below shows the synthesis of “a white cat” and “a yellow dog” individually, serving as a sanity check for the quality of the subjects.
           </p>
         </div>
         <div class="content has-text-centered">
@@ -433,23 +469,97 @@ background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75
         <!-- Keyframe result -->
         <div class="content has-text-justified">
           <p>
-            <span class="dnerf">TrailBlazer</span> features a novel way to guide the synthesized subject through bbox keyframing. For instance, the user can animate the fish swimming towards the camera and then goes away. Or, the user can control the cat running speed through keyframing. <span class="dnerf">TrailBlazer</span>’s keyframing is surprisingly powerful. For example, a fish swimming toward the camera and then away can be animated simply by increasing and then reducing the bbox size.
-
+            <span class="dnerf">TrailBlazer</span> features a novel way to guide
+            the synthesized subject through bbox keyframing. For instance, the
+            user can animate the fish swimming towards the camera and then goes
+            away. Or, the user can control the cat running speed through
+            keyframing.
           </p>
         </div>
         <div class="content has-text-centered">
-          <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/dd/TDD.0006.mov"
+        <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/dd/Keyframe-bbox.mov"
                 type="video/mp4">
-      </video>
+        </video>
+        <div class="content has-text-justified">
+         <p>
+            In addition, <span class="dnerf">TrailBlazer</span> demonstrates
+            subject morphing via prompt keyframing. Examples include
+            transformations from a cat to a dog, cat to fish, parrot to penguin,
+            and tiger to elephant, as depicted below.
+         </p>
+         </div>
+        <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/dd/Keyframe-subject.mov"
+                type="video/mp4">
+        </video>
         </div>
         <!-- Keyframe result -->
+
+<!--  _____      _                            ____                _  -->
+<!-- | ____|_  _| |_ _ __ ___ _ __ ___   ___ / ___|___  _ __   __| | -->
+<!-- |  _| \ \/ / __| '__/ _ \ '_ ` _ \ / _ \ |   / _ \| '_ \ / _` | -->
+<!-- | |___ >  <| |_| | |  __/ | | | | |  __/ |__| (_) | | | | (_| | -->
+<!-- |_____/_/\_\\__|_|  \___|_| |_| |_|\___|\____\___/|_| |_|\__,_| -->
+
+        <hr class="bottom-three">
+        <!-- Pipelin -->
+        <h2 class="title is-3">Extreme Conditions with Peekaboo</h2>
+        <div class="content has-text-justified">
+          <p>
+            Here, we present a comparative analysis between <span class="dnerf">TrailBlazer</span> and the previous
+            approach, <a href="https://jinga-lala.github.io/projects/Peekaboo/">Peekaboo</a>, under controlled conditions. In particular, we
+            examine the manipulation of bounding box (bbox) keyframing in
+            extreme scenarios, including rapid changes in bbox size, irregular
+            bbox trajectories, swift motion determined by the middle keyframe,
+            the number of keyframes required to move the subject to its opposite
+            side, and static small bbox.
+          </p>
+          <p>Please see our paper for more detail and the full metric comparisons.</p>
+        </div>
+        <div class="content has-text-centered">
+         <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/dd/TDD-Comp.0001.mov"
+                type="video/mp4">
+         </video>
+          <p> E.g., Our representation of an elephant maintains a stationary
+            position for initial 75% of video before initiating movement. </p>
+          <p>Prompt: An elephant walking on the moon </p>
+         <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/dd/TDD-Comp.0002.mov"
+                type="video/mp4">
+         </video>
+         <p> E.g., The whale gracefully descends into the ocean during the latter part of its jumping motion.</p>
+         <p>Prompt: a photorealistic whale jumping out of water while smoking a cigar</p>
+         <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/dd/TDD-Comp.0003.mov"
+                type="video/mp4">
+         </video>
+         <p>E.g., The horse accurately follows a zigzag path, simulating a galloping motion.</p>
+         <p>Prompt: A horse galloping fast on a street</p>
+         <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/dd/TDD-Comp.0004.mov"
+                type="video/mp4">
+         </video>
+         <p> E.g., Remarkably, the dog seamlessly follows a large number of
+         keyframes (8 keyframes) within a 24-frame video clip, covering the
+         distance from one boundary to the opposite in approximately 3
+           frames. </p>
+         <p>Prompt: A dog is running on the grass</p>
+         <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/dd/TDD-Comp.0005.mov"
+                type="video/mp4">
+         </video>
+         <p> E.g., The clownfish fits into a tiny bbox </p>
+         <p>Prompt: A clownfish swimming in a coral ree</p>
+        </div>
+
+
 
 
 
 
         <hr class="bottom-three">
-
         <h2 class="title is-3">Limitations</h2>
         <div class="content has-text-justified">
           <p>
@@ -457,38 +567,42 @@ background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75
           </p>
         </div>
 
-        
+
         <!-- Pipelin -->
         <h2 class="title is-3">Conclusion</h2>
         <div class="content has-text-justified">
           <p>
             Our contributions are listed below:
           </p>
-          <ol>
+          <ul>
             <li>
               <strong>Novelty</strong>:
-              We introduce a novel approach, <span class="dnerf">TrailBlazer</span>, employing 
-              high-level bounding boxes to guide the 
-              subject in diffusion-based video synthesis. This approach is suitable for casual 
-              users, as it avoids the need to record or draw a frame-by-frame positioning control 
-              signal. In contrast, the low-level guidance signals (detailed masks, edge maps) 
-              used by some other approaches have two disadvantages: it is difficult for non-artists 
-              to draw these shapes, and processing existing videos to obtain these signals limits 
+              We introduce a novel approach, <span class="dnerf">TrailBlazer</span>, employing
+              high-level bounding boxes to guide the
+              subject in diffusion-based video synthesis. This approach is suitable for casual
+              users, as it avoids the need to record or draw a frame-by-frame positioning control
+              signal. In contrast, the low-level guidance signals (detailed masks, edge maps)
+              used by some other approaches have two disadvantages: it is difficult for non-artists
+              to draw these shapes, and processing existing videos to obtain these signals limits
               the available motion to copies of existing sources.
             </li>
+            <ul>
+              </ul>
             <li>
-              <strong>Trajectory control</strong>: 
-              <span class="dnerf">TrailBlazer</span> enables users to position the subject by keyframing its bounding box. 
+              <strong>Trajectory control</strong>:
+              <span class="dnerf">TrailBlazer</span> enables users to position the subject by keyframing its bounding box.
               The size of the bbox can be similarly controlled, thereby producing directional motion and perspective effects.
               Finally, users can also keyframe the text prompt to influence the behavior of the subject in the synthesized video.
             </li>
+            <ul>
+              </ul>
             <li>
-              <strong>Simplicity</strong>: 
-              <span class="dnerf">TrailBlazer</span> operates by directly editing the spatial and temporal attention in the 
-              pre-trained denoising UNet. It requiring no training or optimization, and the core algorithm can be implemented 
+              <strong>Simplicity</strong>:
+              <span class="dnerf">TrailBlazer</span> operates by directly editing the spatial and temporal attention in the
+              pre-trained denoising UNet. It requiring no training or optimization, and the core algorithm can be implemented
               in less than 200 lines of code.
             </li>
-          </ol>
+          </ul>
         </div>
         <!-- Keyframe result -->
 
@@ -522,7 +636,7 @@ background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75
     <h2 class="title">BibTeX</h2>
     <pre><code>
       @misc{ma2023trailblazer,
-            title={TrailBlazer: Trajectory Control for Diffusion-Based Video Generation}, 
+            title={TrailBlazer: Trajectory Control for Diffusion-Based Video Generation},
             author={Wan-Duo Kurt Ma and J. P. Lewis and W. Bastiaan Kleijn},
             year={2023},
             eprint={2401.00896},
