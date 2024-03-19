@@ -414,7 +414,7 @@ background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75
           <video id="teaser" autoplay muted loop playsinline height="100%">
         <source src="./static/dd/TDD.0003.mov"
                 type="video/mp4">
-      </video>
+          </video>
         </div>
 
         <hr class="bottom-three">
@@ -423,7 +423,12 @@ background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75
         <!-- <h2 class="title is-4">Method</h2> -->
         <div class="content has-text-justified">
           <p>
-            Scene compositing allows the motion of several subjects to be simultaneously controlled.This algorithm first computes the initial denoising steps of each subject individually. The first figure below shows the synthesis of “a white cat” and “a yellow dog” individually, serving as a sanity check for the quality of the subjects.
+            Scene compositing allows the motion of several subjects to be
+            simultaneously controlled.This algorithm first computes the initial
+            denoising steps of each subject individually. The first figure below
+            shows the synthesis of “a white cat” and “a yellow dog”
+            individually, serving as a sanity check for the quality of the
+            subjects.
           </p>
         </div>
         <div class="content has-text-centered">
@@ -436,14 +441,19 @@ background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75
         <!-- <h2 class="title is-4">Result</h2> -->
         <div class="content has-text-justified">
           <p>
-            Then, these per-subject intermediate results are composited and processed by a global denoising under the control of a complete prompt (“a white cat and a yellow dog…”) that includes a description of the environment (e.g., “...on the moon”). Note that interactions between the background and subjects appear plausible, as seen in the consistent shadows across all samples.
+            Then, these per-subject intermediate results are composited and
+            processed by a global denoising under the control of a complete
+            prompt (“a white cat and a yellow dog…”) that includes a description
+            of the environment (e.g., “...on the moon”). Note that interactions
+            between the background and subjects appear plausible, as seen in the
+            consistent shadows across all samples.
           </p>
         </div>
         <div class="content has-text-centered">
           <video id="teaser" autoplay muted loop playsinline height="100%">
         <source src="./static/dd/TDD.0005.mov"
                 type="video/mp4">
-      </video>
+          </video>
         </div>
 
 
@@ -458,6 +468,9 @@ background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75
             in the specified environment, providing a viable pipeline for video
             storytelling by casual users.
           </p>
+          <p> Please be aware that the annotated bounding boxes in all
+          experiments below have been manually animated to enhance the viewing
+          experience. </p>
         </div>
 
         <div class="content has-text-centered">
@@ -515,7 +528,7 @@ background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75
             the number of keyframes required to move the subject to its opposite
             side, and static small bbox.
           </p>
-          <p>Please see our paper for more detail and the full metric comparisons.</p>
+          <p>Please see our paper for more detail and the full metric (e.g., FID, FVD, mIoU,..) comparisons and reasonings.</p>
         </div>
         <div class="content has-text-centered">
          <video id="teaser" autoplay muted loop playsinline height="100%">
